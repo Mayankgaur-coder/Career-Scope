@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerScope — AI Career & Market Worth Intelligence Platform</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #030712;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .panel-card {
+      background: rgba(11, 17, 32, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .panel-input {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+    }
+    .panel-input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+      outline: none;
+    }
+    .hero-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, rgba(16, 185, 129, 0.05) 35%, rgba(3, 7, 18, 0) 70%);
+    }
+    .gradient-headline {
+      background: linear-gradient(135deg, #ffffff 30%, #818cf8 65%, #34d399 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-word {
+      background: linear-gradient(135deg, #818cf8 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-green {
+      background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #030712; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+    @media print {
+      body { background: white !important; color: black !important; }
+      .no-print { display: none !important; }
+      .panel-card { background: white !important; border: 1px solid #ddd !important; color: black !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden selection:bg-indigo-600/30 selection:text-indigo-200">
+
+  <!-- Ambient Backdrop Glow -->
+  <div class="fixed inset-0 pointer-events-none hero-glow z-0"></div>
+
+  <!-- Main Container -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-7">
+
+    <!-- Top Navigation Header (Matching Photo 2) -->
+    <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-slate-800/80 gap-4">
+      <div class="flex items-center space-x-3.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 ring-1 ring-white/20">
+          <i class="fa-solid fa-shapes text-white text-base"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-lg font-bold tracking-tight text-white">CareerScope</h1>
+            <span class="px-2 py-0.5 text-[10px] font-semibold bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 rounded-md tracking-wider">AI V2.4</span>
+          </div>
+          <p class="text-xs text-slate-400 font-normal">Indian Tech Market &amp; Compensation Benchmark Engine</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 self-end sm:self-auto no-print">
+        <button type="button" onclick="loadSampleProfile('analyst')" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 transition flex items-center space-x-1.5 shadow-sm">
+          <i class="fa-solid fa-wand-magic-sparkles text-indigo-400 text-[11px]"></i>
+          <span>Sample: Fresher Analyst</span>
+        </button>
+        <button type="button" onclick="loadSampleProfile('cloud')" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 transition flex items-center space-x-1.5 shadow-sm">
+          <i class="fa-solid fa-cloud text-blue-400 text-[11px]"></i>
+          <span>Sample: Cloud Engineer</span>
+        </button>
+        <button type="button" onclick="window.print()" class="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-slate-900/90 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700/80 transition">
+          <i class="fa-solid fa-print"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Title & Subheading Section (Directly from Photo 2) -->
+    <div class="text-center pt-3 pb-2 space-y-3.5 max-w-4xl mx-auto">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-900/80 border border-slate-700/70 shadow-inner">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-xs font-medium text-slate-300">Real-Time Indian Tech Salary &amp; Placement Intelligence</span>
+      </div>
+
+      <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        Know Your True <span class="gradient-word">Market Worth.</span><br>
+        Match High-Tier <span class="gradient-green">Tech Employers.</span>
+      </h2>
+
+      <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed">
+        Benchmarked across verified Tier-1 &amp; Tier-2 corporate standards, hiring trends, and real CTC compensation slabs in India.
+      </p>
+    </div>
+
+    <!-- Candidate Evaluation Parameters Panel (The Photo 2 Style Form) -->
+    <section class="panel-card rounded-2xl p-5 sm:p-7 shadow-2xl relative border border-slate-800/90 space-y-6">
+      
+      <!-- Panel Header with Reset Button -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-white flex items-center space-x-2">
+            <i class="fa-solid fa-id-card text-indigo-400"></i>
+            <span>Candidate Evaluation Parameters</span>
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Provide your actual details or click quick tags to populate tech stacks.</p>
+        </div>
+
+        <button type="button" onclick="resetEvaluationForm()" class="text-xs font-medium text-slate-400 hover:text-white transition flex items-center space-x-1.5 px-2.5 py-1 rounded-lg hover:bg-slate-800/60">
+          <i class="fa-solid fa-rotate-left text-[11px]"></i>
+          <span>Reset</span>
+        </button>
+      </div>
+
+      <!-- Form Inputs Grid -->
+      <form id="evaluationForm" onsubmit="event.preventDefault(); runEvaluation(true);" class="space-y-5">
+        
+        <!-- 4-Column Responsive Parameter Fields -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- Candidate Age -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inputAge" class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Candidate Age</label>
+              <span class="text-[10px] text-slate-500 font-mono">Years</span>
+            </div>
+            <div class="relative">
+              <input type="number" id="inputAge" min="18" max="65" placeholder="e.g. 23" required class="panel-input w-full rounded-xl py-2.5 px-3 pl-9 text-xs text-slate-100 placeholder:text-slate-600 font-mono">
+              <i class="fa-regular fa-user absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+            </div>
+          </div>
+
+          <!-- Experience with 'Set Fresher' button -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inputExp" class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Experience</label>
+              <button type="button" onclick="setFresherExperience()" class="text-[10px] text-indigo-400 hover:text-indigo-300 font-medium flex items-center space-x-1">
+                <i class="fa-solid fa-graduation-cap text-[10px]"></i>
+                <span>Set Fresher (0 Yrs)</span>
+              </button>
+            </div>
+            <div class="relative">
+              <input type="number" id="inputExp" step="0.5" min="0" max="40" placeholder="0 for Fresher" required class="panel-input w-full rounded-xl py-2.5 px-3 pl-9 text-xs text-slate-100 placeholder:text-slate-600 font-mono">
+              <i class="fa-solid fa-briefcase absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+            </div>
+          </div>
+
+          <!-- Completed Projects -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inputProjects" class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Completed Projects</label>
+              <span class="text-[10px] text-slate-500 font-mono">Production / Academic</span>
+            </div>
+            <div class="relative">
+              <input type="number" id="inputProjects" min="0" max="50" placeholder="e.g. 3" required class="panel-input w-full rounded-xl py-2.5 px-3 pl-9 text-xs text-slate-100 placeholder:text-slate-600 font-mono">
+              <i class="fa-solid fa-laptop-code absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+            </div>
+          </div>
+
+          <!-- City Tech Hub -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="inputCity" class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Target Tech Hub</label>
+              <span id="cityMultiplierShort" class="text-[10px] text-emerald-400 font-mono font-medium">+15% Premium</span>
+            </div>
+            <div class="relative">
+              <select id="inputCity" onchange="handleCityFilterChange()" class="panel-input w-full rounded-xl py-2.5 px-3 pl-9 text-xs text-slate-100 bg-slate-900 cursor-pointer">
+                <option value="BLR" selected>Bengaluru (+15%)</option>
+                <option value="HYD">Hyderabad (+10%)</option>
+                <option value="NCR">Delhi NCR / Gurugram (+10%)</option>
+                <option value="MUM">Mumbai (+12%)</option>
+                <option value="PUN">Pune (+5%)</option>
+                <option value="CHE">Chennai (+5%)</option>
+                <option value="REM">Remote (Base 1.0x)</option>
+              </select>
+              <i class="fa-solid fa-location-dot absolute left-3.5 top-3 text-slate-500 text-xs"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Skills Input Field -->
+        <div class="space-y-2.5 pt-1">
+          <div class="flex items-center justify-between">
+            <label for="inputSkills" class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">
+              Candidate Skills <span class="text-slate-500 font-normal lowercase">(comma-separated)</span>
+            </label>
+            <span id="skillCountBadge" class="text-[11px] font-mono text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">
+              5 Skills Selected
+            </span>
+          </div>
+
+          <div class="relative">
+            <input type="text" id="inputSkills" placeholder="e.g. Python, SQL, Power BI, Excel OR React, Node.js, Docker" required class="panel-input w-full rounded-xl py-3 px-3 pl-9 text-xs text-slate-100 placeholder:text-slate-600 font-mono">
+            <i class="fa-solid fa-code absolute left-3.5 top-3.5 text-slate-500 text-xs"></i>
+          </div>
+
+          <!-- Feature 2: Auto-Skills Resume & LinkedIn Bio Scanner (Zero-Typing Mode) -->
+          <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-indigo-400 flex items-center space-x-1.5">
+                <span class="px-1.5 py-0.5 rounded text-[9px] bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 font-mono">FEATURE 2</span>
+                <span>Auto-Skills Resume &amp; LinkedIn Bio Scanner (Zero-Typing Mode)</span>
+              </span>
+              <button type="button" onclick="toggleResumeParser()" class="text-[10px] text-slate-400 hover:text-white flex items-center space-x-1">
+                <i class="fa-solid fa-file-lines text-indigo-400"></i>
+                <span id="resumeToggleText">Open Scanner</span>
+              </button>
+            </div>
+            <div id="resumeScannerSection" class="hidden space-y-2 pt-1 border-t border-slate-800/80">
+              <textarea id="resumeRawText" rows="3" placeholder="Paste your Resume text, project summary, or LinkedIn About section here..." class="panel-input w-full rounded-lg p-2.5 text-xs text-slate-200 placeholder:text-slate-600 font-mono resize-none"></textarea>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] text-slate-500">Auto-detects 60+ engineering, analytics, cyber &amp; AI skills.</span>
+                <button type="button" onclick="parseSkillsFromResume()" class="px-3 py-1 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center space-x-1 shadow-sm">
+                  <i class="fa-solid fa-magnifying-glass-chart text-[10px]"></i>
+                  <span>Auto-Extract Skills</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Domain Filter Tabs (Data & BI, Full Stack, AI & ML, etc.) -->
+          <div class="flex flex-wrap items-center gap-1.5 pt-1">
+            <span class="text-xs font-medium text-slate-400 mr-1 flex items-center">
+              <i class="fa-solid fa-layer-group text-slate-500 text-[11px] mr-1"></i> Domains:
+            </span>
+            <button type="button" data-domain="all" onclick="filterDomainPills('all', event)" class="domain-tab-btn active px-3 py-1 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition shadow-sm">All</button>
+            <button type="button" data-domain="data" onclick="filterDomainPills('data', event)" class="domain-tab-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">Data &amp; BI</button>
+            <button type="button" data-domain="fullstack" onclick="filterDomainPills('fullstack', event)" class="domain-tab-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">Full Stack</button>
+            <button type="button" data-domain="aiml" onclick="filterDomainPills('aiml', event)" class="domain-tab-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">AI &amp; ML</button>
+            <button type="button" data-domain="devops" onclick="filterDomainPills('devops', event)" class="domain-tab-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">Cloud/DevOps</button>
+            <button type="button" data-domain="cyber" onclick="filterDomainPills('cyber', event)" class="domain-tab-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition">Cyber Security</button>
+          </div>
+
+          <!-- Skill Pills Container -->
+          <div id="skillPillsContainer" class="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pt-1 pr-1"></div>
+        </div>
+
+        <!-- Submit Bar -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="text-xs text-slate-400 flex items-center space-x-2">
+            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+            <span>Verified against 2024-2025 Indian CTC Slabs &amp; Hiring Trends</span>
+          </div>
+
+          <!-- Feature 4 Shortcut Selector: College Tier -->
+          <div class="flex items-center space-x-2">
+            <span class="text-[10px] font-mono text-slate-400">Campus Tier:</span>
+            <select id="inputCollegeTier" onchange="fastRecalculate()" class="panel-input rounded-lg py-1 px-2 text-xs text-slate-200 bg-slate-900 border-slate-800 cursor-pointer">
+              <option value="tier3" selected>Tier-3 / State College</option>
+              <option value="tier2">Tier-2 (Top State / Private)</option>
+              <option value="tier1">Tier-1 (IIT / NIT / BITS)</option>
+            </select>
+          </div>
+
+          <button type="submit" id="submitBtn" class="w-full sm:w-auto py-2.5 px-6 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-emerald-500 hover:from-indigo-500 hover:to-emerald-400 text-white font-semibold text-xs shadow-lg shadow-indigo-500/25 transition-all flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-chart-line text-xs"></i>
+            <span>Calculate Realistic Market Worth</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- EVALUATION DASHBOARD SECTION (Results, Slabs, Booming Skills & Employer Dossier) -->
+    <div class="space-y-6">
+
+      <!-- Top Stat Metric Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Estimated CTC -->
+        <div class="panel-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-indigo-500 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Estimated Annual CTC</span>
+            <i class="fa-solid fa-indian-rupee-sign text-indigo-400 text-xs"></i>
+          </div>
+          <div id="dispCTC" class="text-2xl font-extrabold text-white font-mono">₹0</div>
+          <div class="flex items-center justify-between pt-1 text-[11px]">
+            <span id="cityBonusBadge" class="text-emerald-400 font-medium">+15% Tech Hub Premium</span>
+            <span class="text-slate-500">Gross CTC</span>
+          </div>
+        </div>
+
+        <!-- Matched Track -->
+        <div class="panel-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-blue-500 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Matched Career Track</span>
+            <i class="fa-solid fa-crosshairs text-blue-400 text-xs"></i>
+          </div>
+          <div id="dispTrackName" class="text-sm font-bold text-white truncate pt-1">-</div>
+          <div class="flex items-center justify-between pt-1 text-[11px]">
+            <span id="dispSkillAlignment" class="text-blue-400 font-medium font-mono">0% Alignment</span>
+            <span class="text-slate-500">Primary Domain</span>
+          </div>
+        </div>
+
+        <!-- Seniority Tier -->
+        <div class="panel-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-purple-500 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Seniority Tier</span>
+            <i class="fa-solid fa-user-tie text-purple-400 text-xs"></i>
+          </div>
+          <div id="dispSeniority" class="text-sm font-bold text-white truncate pt-1">Fresher</div>
+          <div class="flex items-center justify-between pt-1 text-[11px]">
+            <span id="dispExpYearsBadge" class="text-slate-300 font-mono">0y Exp</span>
+            <span class="text-slate-500">Industry Grade</span>
+          </div>
+        </div>
+
+        <!-- Upskilling Hike Potential -->
+        <div class="panel-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-emerald-500 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Upskilling Growth Target</span>
+            <i class="fa-solid fa-arrow-trend-up text-emerald-400 text-xs"></i>
+          </div>
+          <div id="dispProjectedCTC" class="text-xl font-extrabold text-emerald-400 font-mono">₹0</div>
+          <div class="flex items-center justify-between pt-1 text-[11px]">
+            <span id="dispSalaryHikeBadge" class="text-emerald-300 font-semibold">+25% Hike</span>
+            <span class="text-slate-500">Post Competency</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FEATURE 1 & FEATURE 5 ROW: IN-HAND CASH DEDUCTIONS + AI EXPIRY METER -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- FEATURE 1: In-Hand vs CTC Monthly Cash Breakdown -->
+        <div class="lg:col-span-7 panel-card rounded-2xl p-5 space-y-4 border-emerald-500/30">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <div class="flex items-center space-x-2">
+              <span class="px-1.5 py-0.5 rounded text-[9px] bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-mono">FEATURE 1</span>
+              <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+                <i class="fa-solid fa-wallet text-emerald-400"></i>
+                <span>In-Hand vs CTC Cash Breakdown (New Tax Regime FY 24-25)</span>
+              </span>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono">Standard ₹75,000 Ded.</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Net Monthly Take-Home:</span>
+              <div id="dispMonthlyInHand" class="text-xl font-extrabold text-emerald-400 font-mono">₹0 /mo</div>
+              <span class="text-[10px] text-slate-500">Credited to Bank</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Monthly PF Deduction:</span>
+              <div id="dispMonthlyPF" class="text-base font-bold text-slate-200 font-mono">₹0 /mo</div>
+              <span class="text-[10px] text-slate-500">12% Basic (Retirement)</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Income Tax (TDS) + PT:</span>
+              <div id="dispMonthlyTax" class="text-base font-bold text-rose-400 font-mono">₹0 /mo</div>
+              <span class="text-[10px] text-slate-500">TDS + ₹200/mo PT</span>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-slate-400 px-1">
+            <span>Annual Net Take-Home: <strong id="dispAnnualInHand" class="text-slate-100 font-mono">₹0</strong></span>
+            <span>Total Annual Deductions: <strong id="dispAnnualDeductions" class="text-rose-400 font-mono">₹0</strong></span>
+          </div>
+        </div>
+
+        <!-- FEATURE 5: Stack Longevity & AI Automation Expiry Meter -->
+        <div class="lg:col-span-5 panel-card rounded-2xl p-5 space-y-3.5 border-purple-500/30">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <div class="flex items-center space-x-2">
+              <span class="px-1.5 py-0.5 rounded text-[9px] bg-purple-500/20 border border-purple-500/40 text-purple-300 font-mono">FEATURE 5</span>
+              <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+                <i class="fa-solid fa-shield-virus text-purple-400"></i>
+                <span>Stack Longevity &amp; AI Expiry Meter</span>
+              </span>
+            </div>
+            <span id="dispExpiryScoreBadge" class="text-[10px] font-bold font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/30">92% Resilient</span>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs">
+              <span class="text-slate-300">5-Year Market Resilience Score</span>
+              <span id="dispResiliencePct" class="font-mono text-emerald-400 font-bold">92%</span>
+            </div>
+            <div class="w-full h-2 rounded-full bg-slate-900 border border-slate-800 overflow-hidden">
+              <div id="resilienceProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-indigo-500 rounded-full transition-all duration-500" style="width: 92%"></div>
+            </div>
+            <p id="dispExpiryInsight" class="text-[11px] text-slate-400 pt-1 leading-relaxed">
+              Your stack combines core logic with modern tools, giving high immunity against commoditization.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FEATURE 4: COLLEGE PEDIGREE / CAMPUS TIER PARITY ROADMAP -->
+      <div class="panel-card rounded-2xl p-5 space-y-4 border-indigo-500/30">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-2 border-b border-slate-800 gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="px-1.5 py-0.5 rounded text-[9px] bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 font-mono">FEATURE 4</span>
+            <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+              <i class="fa-solid fa-graduation-cap text-indigo-400"></i>
+              <span>College Pedigree Parity Roadmap (Tier-3 to Tier-1 Equalization Curve)</span>
+            </span>
+          </div>
+          <span id="dispParityTargetBadge" class="text-[10px] text-indigo-300 font-mono font-semibold bg-indigo-950/60 px-2.5 py-0.5 rounded border border-indigo-500/30">
+            Equalization Target: 2.2 Years
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs">
+          <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1">
+            <span class="text-[10px] font-mono uppercase text-slate-400 font-bold block">Phase 1: Foundation (Months 0-12)</span>
+            <p id="dispParityPhase1" class="text-slate-200 font-medium text-[11px]">Solidify system fundamentals and deliver 2 high-impact production apps.</p>
+            <span class="text-[10px] text-indigo-400 font-mono block pt-1">Milestone: 1st Switch (+40-60%)</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1">
+            <span class="text-[10px] font-mono uppercase text-slate-400 font-bold block">Phase 2: High-Demand Upskill (Months 12-24)</span>
+            <p id="dispParityPhase2" class="text-slate-200 font-medium text-[11px]">Master distributed architecture or advanced data cloud competencies.</p>
+            <span class="text-[10px] text-emerald-400 font-mono block pt-1">Milestone: Product Company Pivot</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1">
+            <span class="text-[10px] font-mono uppercase text-slate-400 font-bold block">Phase 3: Tier-1 Parity (Months 24+)</span>
+            <p id="dispParityPhase3" class="text-slate-200 font-medium text-[11px]">Experience &amp; execution completely overtake college brand.</p>
+            <span class="text-[10px] text-purple-400 font-mono block pt-1">Result: 100% Salary Equalization</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-COLUMN SPLIT: SLABS & BOOMING SKILLS (Left) + CORPORATE DOSSIER (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Official Slabs & Booming Skill + FEATURE 6 (6 cols) -->
+        <div class="lg:col-span-6 space-y-5">
+          
+          <!-- Official Compensation Slabs Comparison -->
+          <div class="panel-card rounded-2xl p-5 space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                <i class="fa-solid fa-chart-simple text-indigo-400"></i>
+                <span>Official Industry Slabs for Matched Track</span>
+              </span>
+              <span class="text-[10px] text-slate-400 font-mono">Market Baseline</span>
+            </div>
+
+            <div class="space-y-3.5 text-xs pt-1">
+              <div>
+                <div class="flex justify-between text-[11px] mb-1.5">
+                  <span class="text-slate-300 font-medium">Fresher / Entry-Level (0 - 1 Year)</span>
+                  <span id="dispFresherSlab" class="font-mono text-slate-400 font-semibold">₹3.8L - ₹5.8L</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-900 border border-slate-800 overflow-hidden">
+                  <div class="h-full bg-slate-600 rounded-full" style="width: 35%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] mb-1.5">
+                  <span class="text-slate-300 font-medium">Mid-Level Specialist (2 - 5 Years)</span>
+                  <span id="dispMidSlab" class="font-mono text-indigo-400 font-semibold">₹7.0L - ₹12.5L</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-900 border border-slate-800 overflow-hidden">
+                  <div class="h-full bg-indigo-500 rounded-full" style="width: 65%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-[11px] mb-1.5">
+                  <span class="text-slate-300 font-medium">Senior Professional / Lead (6+ Years)</span>
+                  <span id="dispSeniorSlab" class="font-mono text-emerald-400 font-semibold">₹13.0L - ₹22.0L</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-slate-900 border border-slate-800 overflow-hidden">
+                  <div class="h-full bg-emerald-500 rounded-full" style="width: 95%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Booming Competency Card -->
+          <div class="panel-card rounded-2xl p-5 border-amber-500/25 space-y-3.5">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                <i class="fa-solid fa-fire text-amber-400"></i>
+                <span>High-Demand Booming Competency</span>
+              </span>
+              <span class="text-[10px] font-bold font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">Immediate Recruiter Priority</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/30">
+              <span class="text-[10px] font-mono uppercase text-amber-400 font-bold block mb-1">Recommended Upskill Target:</span>
+              <p id="dispBoomingSkill" class="text-xs font-bold text-slate-100 font-mono">Snowflake, PySpark &amp; Advanced DAX</p>
+            </div>
+
+            <div>
+              <span class="text-[11px] font-semibold text-slate-400 block mb-2">High-Tier Companies Actively Recruiting for this Skill:</span>
+              <div id="hiringCompaniesList" class="flex flex-wrap gap-1.5"></div>
+            </div>
+          </div>
+
+          <!-- FEATURE 6: 90-DAY MASTER ACTION PLAN -->
+          <div class="panel-card rounded-2xl p-5 border-blue-500/30 space-y-3.5">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <div class="flex items-center space-x-2">
+                <span class="px-1.5 py-0.5 rounded text-[9px] bg-blue-500/20 border border-blue-500/40 text-blue-300 font-mono">FEATURE 6</span>
+                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+                  <i class="fa-solid fa-route text-blue-400"></i>
+                  <span>90-Day Master Upskilling Action Plan</span>
+                </span>
+              </div>
+              <span class="text-[10px] text-slate-400 font-mono">Sprint Curriculum</span>
+            </div>
+
+            <div class="space-y-2.5 text-xs">
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+                <span class="text-[10px] font-mono text-indigo-400 font-bold block">Weeks 1-4: Foundation &amp; Tool Architecture</span>
+                <p id="dispPlanWeeks1_4" class="text-slate-300 text-[11px] mt-0.5">Master official documentation, schema patterns, and local environment development.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+                <span class="text-[10px] font-mono text-emerald-400 font-bold block">Weeks 5-8: Production Capstone Project Build</span>
+                <p id="dispPlanWeeks5_8" class="text-slate-300 text-[11px] mt-0.5">Build and deploy 1 enterprise-grade repo with end-to-end integration and GitHub README.</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+                <span class="text-[10px] font-mono text-purple-400 font-bold block">Weeks 9-12: System Design &amp; Mock Placement Loops</span>
+                <p id="dispPlanWeeks9_12" class="text-slate-300 text-[11px] mt-0.5">Solve company-specific live coding questions and rehearse behavioral &amp; design interviews.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Corporate Placement Dossier + FEATURE 7 (6 cols) -->
+        <div class="lg:col-span-6 space-y-5">
+          <div class="panel-card rounded-2xl p-5 space-y-4">
+            
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-800 gap-2">
+              <div>
+                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                  <i class="fa-solid fa-building text-indigo-400"></i>
+                  <span>Corporate Placement Dossier</span>
+                </span>
+                <p class="text-[11px] text-slate-400 mt-0.5">Select an enterprise to view office hubs and hiring rounds.</p>
+              </div>
+
+              <!-- Dropdown -->
+              <select id="companySelectDropdown" onchange="onCompanyDropdownChanged()" class="panel-input rounded-xl py-1.5 px-3 text-xs text-slate-100 bg-slate-900 cursor-pointer">
+                <option value="">Select Employer</option>
+              </select>
+            </div>
+
+            <!-- Dossier Card Details -->
+            <div id="companyDossierCard" class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-3.5 text-xs">
+              
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-2 border-b border-slate-800 gap-2">
+                <div>
+                  <h4 id="dossierName" class="text-sm font-bold text-white flex items-center space-x-2">Select a Company</h4>
+                  <p id="dossierSector" class="text-[11px] text-indigo-400 font-medium mt-0.5">-</p>
+                </div>
+                <div class="flex items-center space-x-2 text-[11px]">
+                  <span id="dossierRating" class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 font-semibold border border-amber-500/20 font-mono">4.0 / 5.0</span>
+                  <span id="dossierHQ" class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">HQ</span>
+                </div>
+              </div>
+
+              <!-- Locations & Links -->
+              <div class="space-y-2.5">
+                <div>
+                  <span class="text-slate-400 font-semibold block text-[11px]">Primary Development &amp; Office Hubs:</span>
+                  <p id="dossierLocations" class="text-slate-200 font-medium text-[11px] mt-0.5">-</p>
+                </div>
+
+                <div>
+                  <span class="text-slate-400 font-semibold block text-[11px]">Direct Job Openings:</span>
+                  <div class="flex flex-wrap gap-2 pt-1.5">
+                    <a id="linkLinkedInJobs" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-medium transition flex items-center space-x-1.5">
+                      <i class="fa-brands fa-linkedin text-indigo-400"></i>
+                      <span>LinkedIn Jobs</span>
+                    </a>
+                    <a id="linkGoogleJobs" href="#" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 text-xs font-medium transition flex items-center space-x-1.5">
+                      <i class="fa-brands fa-google text-emerald-400"></i>
+                      <span>Google Careers</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interview Process & Culture -->
+              <div class="pt-2.5 border-t border-slate-800 space-y-2">
+                <div>
+                  <span class="text-slate-400 font-semibold block text-[11px]">Recruitment Process &amp; Rounds:</span>
+                  <p id="dossierRounds" class="text-slate-300 text-[11px] mt-0.5">-</p>
+                </div>
+                <div>
+                  <span class="text-slate-400 font-semibold block text-[11px]">Work Culture &amp; Perks:</span>
+                  <p id="dossierCulture" class="text-slate-300 text-[11px] mt-0.5">-</p>
+                </div>
+              </div>
+
+              <!-- FEATURE 7: VERIFIED INTERVIEW CHEAT-SHEET -->
+              <div class="pt-2.5 border-t border-slate-800 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-300 font-bold flex items-center space-x-1.5 text-[11px]">
+                    <span class="px-1.5 py-0.5 rounded text-[9px] bg-amber-500/20 border border-amber-500/40 text-amber-300 font-mono">FEATURE 7</span>
+                    <span>Top 5 Technical Interview Questions Asked at this Company:</span>
+                  </span>
+                  <span class="text-[10px] text-slate-500 font-mono">Verified Rounds</span>
+                </div>
+                <div id="dossierQuestionsList" class="space-y-1.5 pt-1">
+                  <div class="p-2 rounded-lg bg-slate-950/70 border border-slate-800/80 text-slate-300 text-[11px] font-mono">
+                    Select a company to view the actual questions asked in technical rounds.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- FEATURE 3: 1-CLICK FORMAL SALARY NEGOTIATION COUNTER-OFFER EMAIL -->
+          <div class="panel-card rounded-2xl p-5 space-y-3.5 border-indigo-500/30">
+            <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+              <div class="flex items-center space-x-2">
+                <span class="px-1.5 py-0.5 rounded text-[9px] bg-indigo-500/20 border border-indigo-500/40 text-indigo-300 font-mono">FEATURE 3</span>
+                <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+                  <i class="fa-solid fa-envelope-open-text text-indigo-400"></i>
+                  <span>1-Click Salary Negotiation Counter-Offer Email Generator</span>
+                </span>
+              </div>
+              <button type="button" onclick="copyNegotiationEmail()" class="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/40 transition flex items-center space-x-1">
+                <i class="fa-regular fa-copy text-[10px]"></i>
+                <span id="copyEmailBtnText">Copy Email</span>
+              </button>
+            </div>
+
+            <p class="text-[11px] text-slate-400">Pre-formatted formal HR counter-offer email citing evaluated benchmarks &amp; city premium.</p>
+
+            <textarea id="negotiationEmailText" readonly rows="7" class="panel-input w-full rounded-xl p-3 text-xs font-mono text-slate-300 bg-slate-950/90 border border-slate-800 resize-none outline-none leading-relaxed" placeholder="Calculate your market worth to generate your customized salary negotiation email."></textarea>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- BOTTOM COMPREHENSIVE EVALUATION REPORT SECTION -->
+      <section class="panel-card rounded-2xl p-5 sm:p-6 shadow-2xl relative border border-slate-800/90 space-y-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-slate-800 gap-3">
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-white flex items-center space-x-2">
+              <i class="fa-solid fa-file-contract text-emerald-400"></i>
+              <span>Official Market Evaluation &amp; Placement Report</span>
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Comprehensive audit breakdown of candidate profile, verified slabs, and enterprise hiring targets.</p>
+          </div>
+
+          <div class="flex items-center gap-2 self-end sm:self-auto no-print">
+            <button type="button" onclick="copyReportText()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 transition flex items-center space-x-1.5 shadow-sm">
+              <i class="fa-regular fa-copy text-indigo-400 text-[11px]"></i>
+              <span id="copyReportBtnText">Copy Report</span>
+            </button>
+            <button type="button" onclick="window.print()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 transition flex items-center space-x-1.5">
+              <i class="fa-solid fa-print text-indigo-400 text-[11px]"></i>
+              <span>Print Dossier</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="relative">
+          <textarea id="reportOutputBox" readonly rows="12" class="panel-input w-full rounded-xl p-4 text-xs font-mono text-slate-300 bg-slate-950/90 border border-slate-800/80 resize-y leading-relaxed outline-none focus:border-indigo-500" placeholder="Enter candidate parameters above and click 'Calculate Realistic Market Worth' to generate the official evaluation report."></textarea>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none bg-slate-900 border border-indigo-500/40 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center space-x-2">
+    <i class="fa-solid fa-circle-check text-emerald-400"></i>
+    <span id="toastMsg">Action completed</span>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    /* =====================================================================
+       1. CORPORATE & BENCHMARK DATABASE
+       ===================================================================== */
+    const CITY_MULTIPLIERS = {
+      "BLR": { name: "Bengaluru Tech Hub", multiplier: 1.15, label: "+15% Tech Hub Premium", short: "+15% Premium" },
+      "HYD": { name: "Hyderabad Cyberabad", multiplier: 1.10, label: "+10% Tier-1 Premium", short: "+10% Premium" },
+      "NCR": { name: "Delhi NCR / Gurugram", multiplier: 1.10, label: "+10% Enterprise Premium", short: "+10% Premium" },
+      "MUM": { name: "Mumbai / MMR", multiplier: 1.12, label: "+12% BFSI & CoL Premium", short: "+12% Premium" },
+      "PUN": { name: "Pune Tech Corridor", multiplier: 1.05, label: "+5% IT Corridor Premium", short: "+5% Premium" },
+      "CHE": { name: "Chennai IT Hub", multiplier: 1.05, label: "+5% IT Corridor Premium", short: "+5% Premium" },
+      "REM": { name: "Remote / Pan-India", multiplier: 1.00, label: "0% Base Standard CTC", short: "1.0x Base" }
+    };
+
+    const COMPANY_DATABASE = {
+      "Tata Consultancy Services": {
+        sector: "Global IT Services & Enterprise Consulting",
+        hq: "Mumbai, Maharashtra",
+        locations: "Bengaluru, Hyderabad, Pune, Chennai, Gurugram, Kolkata, Ahmedabad",
+        rating: "3.8 / 5.0 (AmbitionBox)",
+        rounds: "TCS NQT Assessment, Technical Screening, Managerial Fitment, HR Round",
+        culture: "High job security, structured learning (iEvolve), international project opportunities.",
+        questions: [
+          "Explain difference between normalization and denormalization with an enterprise database example.",
+          "Write an optimized SQL query using window functions (ROW_NUMBER vs DENSE_RANK).",
+          "How do you handle memory management and avoid memory leaks in large applications?",
+          "Explain REST API idempotency and HTTP methods (PUT vs PATCH).",
+          "Describe your final year or production project architecture and challenges faced."
+        ]
+      },
+      "CrowdStrike": {
+        sector: "Endpoint Security & Threat Intelligence",
+        hq: "Austin, Texas / Pune R&D Hub",
+        locations: "Pune, Bengaluru (Remote-Friendly)",
+        rating: "4.3 / 5.0",
+        rounds: "System Internals / C++ Assessment, Malware & Threat Hunting Viva, Low-Level Architecture, HR",
+        culture: "Premier global cyber security research, cutting-edge threat detection, high engineering compensation.",
+        questions: [
+          "How does kernel-level vs user-level hooking work in Windows/Linux OS?",
+          "Explain how you analyze memory dumps for malware detection.",
+          "Differentiate between signature-based and behavioral-based threat detection systems.",
+          "How would you design a distributed, tamper-proof audit logging pipeline?",
+          "Explain the TCP/IP three-way handshake and common SYN-flood mitigation mechanisms."
+        ]
+      },
+      "Palo Alto Networks": {
+        sector: "Cybersecurity & Cloud Security (Prisma / Cortex)",
+        hq: "Santa Clara, USA / Bengaluru Tech Center",
+        locations: "Bengaluru, Hyderabad, Delhi NCR",
+        rating: "4.4 / 5.0",
+        rounds: "Network Protocols & Coding Loop, Distributed Cloud Security Architecture, Security Scenario Viva, Executive Fitment",
+        culture: "High-autonomy culture, generous stock awards (RSUs), deep networking and cloud security engineering.",
+        questions: [
+          "Explain Zero Trust architecture and how identity verification is enforced continuously.",
+          "How do Next-Generation Firewalls (NGFW) inspect encrypted SSL/TLS traffic without latency?",
+          "Describe the steps to secure a Kubernetes cluster against lateral movement attacks.",
+          "Explain OWASP Top 10 vulnerabilities with remediation for SSRF and SQL Injection.",
+          "How do you design a high-throughput network packet processing pipeline in C++/Go?"
+        ]
+      },
+      "JPMorgan Chase": {
+        sector: "Global Investment Banking & Financial Technology",
+        hq: "New York, USA / Bengaluru & Hyderabad Hubs",
+        locations: "Bengaluru, Hyderabad, Mumbai",
+        rating: "4.2 / 5.0",
+        rounds: "HackerRank Coding Challenge, Core Computer Science & Algorithms, High-Concurrency System Design, Behavioral Fitment",
+        culture: "Institutional financial security, top-tier annual bonuses, massive transaction scale architecture.",
+        questions: [
+          "How do you ensure ACID properties across distributed microservices (Saga pattern vs 2PC)?",
+          "Explain Java Memory Model (Garbage Collection, Heap vs Stack, volatile keyword).",
+          "Write an algorithm to detect cycles in a directed graph and determine processing order (Topological Sort).",
+          "How do you design a fault-tolerant payment transaction processing pipeline handling 50k TPS?",
+          "Explain database indexing internals (B-Trees vs Hash Index) and execution plan optimizations."
+        ]
+      },
+      "Infosys": {
+        sector: "Information Technology & Digital Cloud Services",
+        hq: "Bengaluru, Karnataka",
+        locations: "Bengaluru, Pune, Hyderabad, Chennai, Mysuru, Chandigarh, Thiruvananthapuram",
+        rating: "3.9 / 5.0",
+        rounds: "HackerRank Coding Challenge, Domain Technical Deep-Dive, HR Discussion",
+        culture: "World-class Mysuru training academy, global client portfolio, internal movement flexibility.",
+        questions: [
+          "Explain Object Oriented Programming (OOP) principles with real-world banking examples.",
+          "Write a program to reverse a linked list and detect if there is a cycle.",
+          "Explain the differences between SQL and NoSQL databases when scaling horizontally.",
+          "What are microservices and how do API gateways route and throttle requests?",
+          "How do you optimize an application that is taking too long to fetch database records?"
+        ]
+      },
+      "Wipro": {
+        sector: "IT Services & Cloud Infrastructure",
+        hq: "Bengaluru, Karnataka",
+        locations: "Bengaluru, Hyderabad, Pune, Chennai, Noida, Kolkata, Coimbatore",
+        rating: "3.8 / 5.0",
+        rounds: "National Qualifier Test, Core Domain Assessment, Technical Project Viva, HR",
+        culture: "Predictable career growth, structured internal certifications, good work-life balance.",
+        questions: [
+          "Explain SDLC models and how Agile methodology improves sprint delivery.",
+          "What is the difference between synchronous and asynchronous API communication?",
+          "How does index scanning work in relational databases and when does it cause a table scan?",
+          "Explain Exception Handling best practices in backend software development.",
+          "Walk through the steps to containerize an application using Docker and run it on a server."
+        ]
+      },
+      "Cognizant": {
+        sector: "Digital Business & Enterprise Services",
+        hq: "Teaneck, USA / Chennai Hub",
+        locations: "Chennai, Bengaluru, Hyderabad, Pune, Kolkata, Coimbatore, Gurugram",
+        rating: "3.9 / 5.0",
+        rounds: "GenC Next Technical Exam, DSA Problem Solving, Client Fitment Interview",
+        culture: "Fast-paced delivery, extensive US healthcare and insurance domain projects.",
+        questions: [
+          "Write an algorithm to find the longest substring without repeating characters.",
+          "Explain JWT authentication flow and how refresh tokens maintain session security.",
+          "What are indexes and how do composite indexes impact multi-column query performance?",
+          "How do you implement CI/CD pipelines to deploy containerized services safely?",
+          "What is the difference between monorepo and multi-repo architectures?"
+        ]
+      },
+      "Capgemini": {
+        sector: "Consulting, Technology & Digital Transformation",
+        hq: "Paris, France / Bengaluru Hub",
+        locations: "Bengaluru, Mumbai, Pune, Hyderabad, Chennai, Kolkata, Noida",
+        rating: "3.9 / 5.0",
+        rounds: "Pseudo-Code Test, Coding Assessment, Technical Architectural Round, HR",
+        culture: "Collaborative European corporate culture, hybrid work flexibility, cloud migration focus.",
+        questions: [
+          "Explain dependency injection and inversion of control in modern frameworks.",
+          "How do you design a scalable ETL pipeline using Python and modern cloud storage?",
+          "Explain the differences between Docker images, containers, and Kubernetes pods.",
+          "How do you handle distributed logging and observability across multiple services?",
+          "What are circuit breakers and how do they prevent cascading failures?"
+        ]
+      },
+      "Deloitte USI": {
+        sector: "Global Big-4 Risk, Technology & Strategy Advisory",
+        hq: "Hyderabad / Gurugram Hubs",
+        locations: "Hyderabad, Bengaluru, Gurugram, Mumbai, Kolkata, Chennai",
+        rating: "4.0 / 5.0",
+        rounds: "Aptitude Assessment, Business Analytics Case Study, Senior Manager Round, Partner Fitment",
+        culture: "Top-tier consulting prestige, Fortune 500 client exposure, accelerated promotion cycles.",
+        questions: [
+          "Explain difference between calculated columns and measures in Power BI / DAX with performance impact.",
+          "Write an advanced SQL query to compute Year-over-Year (YoY) revenue retention.",
+          "How do you clean and transform inconsistent transactional data using Python/Pandas?",
+          "Walk through a client dashboard design you built: KPIs tracked, user personas, and data latency.",
+          "How do you handle stakeholder requirements when business users are unsure of exact metrics?"
+        ]
+      },
+      "Amazon India": {
+        sector: "Product Engineering, E-Commerce & AWS Cloud",
+        hq: "Seattle, USA / Hyderabad Hub",
+        locations: "Bengaluru, Hyderabad, Chennai, Delhi NCR, Pune, Mumbai",
+        rating: "4.2 / 5.0",
+        rounds: "Online Assessment (OA 2 DSA questions), 4-5 Virtual Onsite Loops covering DSA, LLD/HLD, and Leadership Principles",
+        culture: "Engineering-first, customer obsession, top 5% market compensation benchmarks.",
+        questions: [
+          "Design Amazon Locker or a distributed rate-limiter system (High-Level Design).",
+          "Solve binary tree maximum path sum or word search II using DFS/Trie.",
+          "How do you implement an LRU Cache with O(1) get and put operations?",
+          "Describe a situation where you had to make a critical decision with incomplete data (Leadership Principle).",
+          "Explain DynamoDB partition keys and how to avoid hot partitions at scale."
+        ]
+      },
+      "Microsoft India": {
+        sector: "Enterprise Software & Cloud Hyperscaler (Azure)",
+        hq: "Redmond, USA / Hyderabad Hub",
+        locations: "Hyderabad, Bengaluru, Noida, Gurugram, Mumbai",
+        rating: "4.4 / 5.0",
+        rounds: "Online Coding Test, 3 DSA & Problem Solving Rounds, System Architecture, AA Round",
+        culture: "Exceptional work-life balance, collaborative culture, generous health and family benefits.",
+        questions: [
+          "Design a collaborative document editor like MS Word Online or Google Docs.",
+          "Solve Median of Two Sorted Arrays or Course Schedule with Cycle Detection.",
+          "Explain multithreading, concurrency locks, and how to avoid deadlocks.",
+          "How does Azure Cosmos DB or Cassandra achieve multi-region active-active replication?",
+          "Design a distributed telemetry logging service that handles millions of logs per second."
+        ]
+      },
+      "Swiggy": {
+        sector: "On-Demand Hyperlocal Tech & Logistics",
+        hq: "Bengaluru, Karnataka",
+        locations: "Bengaluru, Hyderabad, Gurugram, Mumbai (Remote-Friendly)",
+        rating: "4.1 / 5.0",
+        rounds: "Machine Coding Round (2-3 hours), Low-Level Design (LLD), Distributed System Design, VP Round",
+        culture: "Fast deployment velocity, microservices scale, modern open-source technology stack.",
+        questions: [
+          "Machine coding: Implement an in-memory Ride-Sharing or Food-Delivery dispatch engine with clean OOP.",
+          "Design a live delivery partner tracking system with real-time geospatial updates via WebSockets.",
+          "How do you prevent flash-sale overselling when multiple users checkout the last meal simultaneously?",
+          "Explain Redis cache eviction strategies and how to mitigate cache stampede (thundering herd).",
+          "How do you decouple order placement from delivery allocation using Kafka message queues?"
+        ]
+      },
+      "Zomato": {
+        sector: "Food Tech & Quick-Commerce Infrastructure",
+        hq: "Gurugram, Haryana",
+        locations: "Gurugram, Bengaluru, Mumbai, Pune",
+        rating: "4.0 / 5.0",
+        rounds: "Practical Coding Challenge, Architecture & Scalability Round, Culture Fit with Founders/VPs",
+        culture: "Extreme product ownership, high accountability, rewarding annual performance bonuses.",
+        questions: [
+          "Design Blinkit 10-minute quick commerce warehouse inventory management system.",
+          "How do you optimize mobile app API response payloads to render catalog under 200ms on 4G?",
+          "Write an algorithm to cluster customer orders geographically to optimize delivery routes.",
+          "Explain database sharding strategies and how to route queries when sharded by user_id vs city_id.",
+          "Describe your experience debugging a live production outage with high CPU or memory spike."
+        ]
+      },
+      "Razorpay": {
+        sector: "FinTech & Payment Gateway Infrastructure",
+        hq: "Bengaluru, Karnataka",
+        locations: "Bengaluru, Mumbai, Delhi NCR",
+        rating: "4.2 / 5.0",
+        rounds: "Take-Home Engineering Assignment, Code Review & Extensibility Round, System Architecture, Fitment",
+        culture: "Engineering-driven organization, clean code mindset, transparent leadership.",
+        questions: [
+          "Design an idempotent payment webhook delivery system with exponential backoff retries.",
+          "How do you reconcile ledger balances across bank accounts and merchant settlements with double-entry bookkeeping?",
+          "Explain distributed locking in Redis (Redlock) vs database pessimistic locking.",
+          "How do you secure API secrets and customer financial tokens complying with PCI-DSS?",
+          "Walk through how you would architect a recurring subscription billing engine."
+        ]
+      },
+      "CRED": {
+        sector: "FinTech & Premium Credit Rewards",
+        hq: "Bengaluru, Karnataka",
+        locations: "Bengaluru (Indiranagar HQ)",
+        rating: "4.1 / 5.0",
+        rounds: "Product Machine Coding, Advanced Architectural Design, Engineering Director & Founder Round",
+        culture: "Top-percentile compensation, high craft and design-driven engineering standards.",
+        questions: [
+          "Machine coding: Implement a rewards points evaluation engine with extensible rule filters.",
+          "Design an event-driven credit card bill payment notification pipeline using Kafka and Cassandra.",
+          "Explain reactive programming and non-blocking I/O architectures in high-throughput services.",
+          "How do you build zero-downtime database migrations on tables holding tens of millions of rows?",
+          "What makes clean code craft distinguishable from just working code?"
+        ]
+      },
+      "PricewaterhouseCoopers (PwC)": {
+        sector: "Big-4 Advisory & Technology Consulting",
+        hq: "Kolkata / Mumbai Hubs",
+        locations: "Kolkata, Bengaluru, Hyderabad, Gurugram, Mumbai, Chennai, Pune",
+        rating: "3.9 / 5.0",
+        rounds: "Business Case Evaluation, Advanced SQL/Data Analytics Case, Director Viva, HR",
+        culture: "Standardized consulting framework, multi-industry client exposure.",
+        questions: [
+          "Explain Star Schema vs Snowflake Schema with practical warehousing implications.",
+          "Write a complex SQL query using Common Table Expressions (CTEs) and Window Aggregates.",
+          "How do you design automated data quality checks before ingesting client data?",
+          "Explain how you would build a data lakehouse architecture on Azure / AWS.",
+          "Walk through how you present technical analytics findings to non-technical C-suite executives."
+        ]
+      },
+      "Fractal Analytics": {
+        sector: "Pure-Play Artificial Intelligence & Big Data",
+        hq: "New York / Mumbai Hub",
+        locations: "Mumbai, Bengaluru, Gurugram (Remote-Friendly)",
+        rating: "4.2 / 5.0",
+        rounds: "Python/Machine Learning Live Coding, Statistical Modeling Viva, Client Analytics Scenario Round",
+        culture: "Pure AI and data science ecosystem, heavy investment in continuous R&D.",
+        questions: [
+          "Explain bias-variance tradeoff and how regularization (L1 Lasso vs L2 Ridge) affects feature weights.",
+          "How do you evaluate classification models when datasets suffer from severe class imbalance (99:1)?",
+          "Explain the architecture of Transformer models (Self-Attention mechanism, Positional Encodings).",
+          "How do you build a Retrieval Augmented Generation (RAG) pipeline with semantic search and re-ranking?",
+          "How do you prevent data leakage during time-series feature engineering?"
+        ]
+      },
+      "NVIDIA India": {
+        sector: "Semiconductors, GPU Computing & AI Platforms",
+        hq: "Santa Clara, USA / Pune Hub",
+        locations: "Pune, Bengaluru, Hyderabad, Gurugram",
+        rating: "4.6 / 5.0",
+        rounds: "Mathematical Algorithms Assessment, Systems Programming (C++/CUDA/Python), AI Specialist Panel",
+        culture: "World-leading hardware-software integration, premier global engineering package standards.",
+        questions: [
+          "Explain GPU memory architecture (Global Memory, Shared Memory, Warp Scheduler, Bank Conflicts).",
+          "Write an algorithm to perform parallel matrix multiplication using CUDA or multi-threaded C++.",
+          "How do you optimize LLM inference latency using quantization (INT8/FP4) and KV-caching?",
+          "Explain memory cache coherence, cache lines, and false sharing in multi-core CPU architectures.",
+          "How does PyTorch Tensor memory allocation (CUDA graphs, autograd engine) operate under the hood?"
+        ]
+      }
+    };
+
+    const INDUSTRY_TRACKS = {
+      "Data Analyst & Analytics Engineer": {
+        keywords: [
+          "sql", "power bi", "tableau", "excel", "advanced excel", "python", "pandas", "numpy", 
+          "dax", "power query", "data cleaning", "data visualization", "etl", "statistics", 
+          "alteryx", "metabase", "eda", "snowflake", "bigquery", "data warehousing", "pyspark",
+          "looker", "ssis", "ssas", "business intelligence", "data modeling"
+        ],
+        fresher_range: [380000, 580000],
+        mid_range: [700000, 1250000],
+        senior_range: [1300000, 2200000],
+        current_companies: ["Deloitte USI", "Capgemini", "Tata Consultancy Services", "PricewaterhouseCoopers (PwC)"],
+        booming_skill: "Snowflake Data Cloud, PySpark Data Pipelines & Advanced DAX",
+        hiring_companies: ["Deloitte USI", "PricewaterhouseCoopers (PwC)", "Amazon India", "JPMorgan Chase"],
+        salary_boost_pct: 25
+      },
+      "Full Stack / Web Developer": {
+        keywords: [
+          "html", "css", "javascript", "typescript", "react", "next.js", "node.js", "express", 
+          "mongodb", "postgresql", "tailwind css", "redux", "rest api", "graphql", "django", 
+          "spring boot", "git", "docker", "system design", "microservices", "ci/cd",
+          "prisma", "websockets", "redis", "firebase", "fastapi"
+        ],
+        fresher_range: [360000, 600000],
+        mid_range: [750000, 1450000],
+        senior_range: [1600000, 2800000],
+        current_companies: ["Tata Consultancy Services", "Infosys", "Wipro", "Cognizant", "Capgemini"],
+        booming_skill: "Next.js 14 App Router, TypeScript, Micro-Frontends & GraphQL",
+        hiring_companies: ["Swiggy", "Zomato", "Razorpay", "CRED"],
+        salary_boost_pct: 28
+      },
+      "Backend & Distributed Systems Engineer": {
+        keywords: [
+          "java", "spring boot", "django", "node.js", "express", "postgresql", "mongodb", 
+          "system design", "microservices", "docker", "git", "ci/cd", "rest api", "graphql",
+          "kafka", "redis", "grpc", "c++", "golang", "distributed systems"
+        ],
+        fresher_range: [450000, 850000],
+        mid_range: [950000, 1750000],
+        senior_range: [1900000, 3400000],
+        current_companies: ["Capgemini", "Infosys", "Wipro", "Cognizant", "Tata Consultancy Services"],
+        booming_skill: "Distributed Systems Architecture, Apache Kafka, Redis & Low-Level Design",
+        hiring_companies: ["Amazon India", "Microsoft India", "JPMorgan Chase", "Razorpay"],
+        salary_boost_pct: 32
+      },
+      "AI & Machine Learning Engineer": {
+        keywords: [
+          "machine learning", "deep learning", "nlp", "computer vision", "pytorch", "tensorflow", 
+          "scikit-learn", "generative ai", "langchain", "large language models (llms)", "llm", 
+          "rag", "prompt engineering", "vector databases", "hugging face", "opencv", "mlops", "python",
+          "transformers", "fine-tuning", "pandas", "numpy", "agents", "langgraph"
+        ],
+        fresher_range: [650000, 1050000],
+        mid_range: [1200000, 2100000],
+        senior_range: [2200000, 3900000],
+        current_companies: ["Fractal Analytics", "Cognizant", "Tata Consultancy Services", "Capgemini"],
+        booming_skill: "Generative AI, LangChain, RAG Systems & Vector Databases (Pinecone/Milvus)",
+        hiring_companies: ["NVIDIA India", "Microsoft India", "Amazon India", "Fractal Analytics"],
+        salary_boost_pct: 40
+      },
+      "Cloud & DevOps Platform Engineer": {
+        keywords: [
+          "aws", "azure", "docker", "kubernetes", "devops", "ci/cd", "terraform", "linux", 
+          "git", "system design", "ansible", "jenkins", "prometheus", "grafana", "helm",
+          "gcp", "bash scripting", "cloudformation"
+        ],
+        fresher_range: [450000, 750000],
+        mid_range: [900000, 1700000],
+        senior_range: [1800000, 3300000],
+        current_companies: ["Wipro", "Infosys", "Tata Consultancy Services", "Capgemini"],
+        booming_skill: "Kubernetes Production Orchestration, Terraform IaC, Multi-Cloud & GitOps",
+        hiring_companies: ["Microsoft India", "Amazon India", "Palo Alto Networks", "JPMorgan Chase"],
+        salary_boost_pct: 35
+      },
+      "Cyber Security & SOC Analyst": {
+        keywords: [
+          "ethical hacking", "network security", "penetration testing", "soc analysis", 
+          "siem", "wireshark", "splunk", "linux", "metasploit", "cryptography", 
+          "incident response", "firewall", "vulnerability assessment", "owasp",
+          "burp suite", "nmap", "threat intelligence", "kali linux", "zero trust"
+        ],
+        fresher_range: [420000, 680000],
+        mid_range: [850000, 1550000],
+        senior_range: [1700000, 3000000],
+        current_companies: ["Tata Consultancy Services", "Infosys", "Wipro", "Cognizant"],
+        booming_skill: "Cloud Security Posture (CSPM), Zero Trust Architecture & Enterprise SIEM",
+        hiring_companies: ["CrowdStrike", "Palo Alto Networks", "JPMorgan Chase", "Deloitte USI"],
+        salary_boost_pct: 30
+      }
+    };
+
+    const SKILL_PILLS_CATALOG = {
+      data: [
+        "SQL", "Power BI", "Tableau", "Excel", "Advanced Excel", "Python", "Pandas", "NumPy", 
+        "DAX", "Power Query", "Data Cleaning", "Data Visualization", "ETL", "Statistics", 
+        "Alteryx", "Metabase", "EDA", "Snowflake", "BigQuery", "PySpark", "Looker", "Data Modeling"
+      ],
+      fullstack: [
+        "HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Node.js", "Express", 
+        "MongoDB", "PostgreSQL", "Tailwind CSS", "Redux", "REST API", "GraphQL", "Django", 
+        "Spring Boot", "Git", "Docker", "System Design", "Microservices", "CI/CD", "Prisma", "Redis", "FastAPI"
+      ],
+      aiml: [
+        "Machine Learning", "Deep Learning", "NLP", "Computer Vision", "PyTorch", "TensorFlow", 
+        "Scikit-learn", "Generative AI", "LangChain", "Large Language Models (LLMs)", 
+        "RAG", "Prompt Engineering", "Vector Databases", "Hugging Face", "OpenCV", "MLOps", "Fine-Tuning", "Transformers"
+      ],
+      devops: [
+        "AWS", "Azure", "GCP", "Docker", "Kubernetes", "DevOps", "CI/CD", "Terraform", "Linux", 
+        "Git", "Ansible", "Jenkins", "Prometheus", "Grafana", "Helm", "System Design", "Bash Scripting"
+      ],
+      cyber: [
+        "Ethical Hacking", "Network Security", "Penetration Testing", "SOC Analysis", 
+        "SIEM", "Wireshark", "Splunk", "Linux", "Metasploit", "Cryptography", 
+        "Incident Response", "Firewall", "Vulnerability Assessment", "OWASP", "Burp Suite", "Nmap", "Zero Trust"
+      ]
+    };
+
+    const ALL_MASTER_SKILLS = Array.from(new Set(Object.values(SKILL_PILLS_CATALOG).flat()));
+
+    /* =====================================================================
+       2. FAST DOM CACHING
+       ==================================================================== */
+    let dom = {};
+    function initDomCache() {
+      dom = {
+        age: document.getElementById('inputAge'),
+        exp: document.getElementById('inputExp'),
+        projects: document.getElementById('inputProjects'),
+        city: document.getElementById('inputCity'),
+        skills: document.getElementById('inputSkills'),
+        collegeTier: document.getElementById('inputCollegeTier'),
+        pillsContainer: document.getElementById('skillPillsContainer'),
+        skillCountBadge: document.getElementById('skillCountBadge'),
+        cityMultiplierShort: document.getElementById('cityMultiplierShort'),
+        dispCTC: document.getElementById('dispCTC'),
+        cityBonusBadge: document.getElementById('cityBonusBadge'),
+        dispTrackName: document.getElementById('dispTrackName'),
+        dispSkillAlignment: document.getElementById('dispSkillAlignment'),
+        dispSeniority: document.getElementById('dispSeniority'),
+        dispExpYearsBadge: document.getElementById('dispExpYearsBadge'),
+        dispFresherSlab: document.getElementById('dispFresherSlab'),
+        dispMidSlab: document.getElementById('dispMidSlab'),
+        dispSeniorSlab: document.getElementById('dispSeniorSlab'),
+        dispBoomingSkill: document.getElementById('dispBoomingSkill'),
+        dispProjectedCTC: document.getElementById('dispProjectedCTC'),
+        dispSalaryHikeBadge: document.getElementById('dispSalaryHikeBadge'),
+        hiringCompaniesList: document.getElementById('hiringCompaniesList'),
+        companySelectDropdown: document.getElementById('companySelectDropdown'),
+        dossierCard: document.getElementById('companyDossierCard'),
+        dossierName: document.getElementById('dossierName'),
+        dossierSector: document.getElementById('dossierSector'),
+        dossierRating: document.getElementById('dossierRating'),
+        dossierHQ: document.getElementById('dossierHQ'),
+        dossierLocations: document.getElementById('dossierLocations'),
+        dossierRounds: document.getElementById('dossierRounds'),
+        dossierCulture: document.getElementById('dossierCulture'),
+        dossierQuestionsList: document.getElementById('dossierQuestionsList'),
+        linkLinkedInJobs: document.getElementById('linkLinkedInJobs'),
+        linkGoogleJobs: document.getElementById('linkGoogleJobs'),
+        reportOutputBox: document.getElementById('reportOutputBox'),
+        copyReportBtnText: document.getElementById('copyReportBtnText'),
+        negotiationEmailText: document.getElementById('negotiationEmailText'),
+        copyEmailBtnText: document.getElementById('copyEmailBtnText'),
+        dispMonthlyInHand: document.getElementById('dispMonthlyInHand'),
+        dispMonthlyPF: document.getElementById('dispMonthlyPF'),
+        dispMonthlyTax: document.getElementById('dispMonthlyTax'),
+        dispAnnualInHand: document.getElementById('dispAnnualInHand'),
+        dispAnnualDeductions: document.getElementById('dispAnnualDeductions'),
+        dispExpiryScoreBadge: document.getElementById('dispExpiryScoreBadge'),
+        dispResiliencePct: document.getElementById('dispResiliencePct'),
+        resilienceProgressBar: document.getElementById('resilienceProgressBar'),
+        dispExpiryInsight: document.getElementById('dispExpiryInsight'),
+        dispParityTargetBadge: document.getElementById('dispParityTargetBadge'),
+        dispParityPhase1: document.getElementById('dispParityPhase1'),
+        dispParityPhase2: document.getElementById('dispParityPhase2'),
+        dispParityPhase3: document.getElementById('dispParityPhase3'),
+        dispPlanWeeks1_4: document.getElementById('dispPlanWeeks1_4'),
+        dispPlanWeeks5_8: document.getElementById('dispPlanWeeks5_8'),
+        dispPlanWeeks9_12: document.getElementById('dispPlanWeeks9_12'),
+        resumeRawText: document.getElementById('resumeRawText'),
+        resumeScannerSection: document.getElementById('resumeScannerSection'),
+        resumeToggleText: document.getElementById('resumeToggleText'),
+        toast: document.getElementById('toast'),
+        toastMsg: document.getElementById('toastMsg')
+      };
+    }
+
+    /* =====================================================================
+       3. INTERACTIVE STATE & EVENT LISTENERS
+       ===================================================================== */
+    let lastEvaluatedState = null;
+    let activeDomainCategory = 'all';
+
+    function toggleResumeParser() {
+      if (!dom.resumeScannerSection || !dom.resumeToggleText) return;
+      const isHidden = dom.resumeScannerSection.classList.contains('hidden');
+      if (isHidden) {
+        dom.resumeScannerSection.classList.remove('hidden');
+        dom.resumeToggleText.textContent = "Close Scanner";
+      } else {
+        dom.resumeScannerSection.classList.add('hidden');
+        dom.resumeToggleText.textContent = "Open Scanner";
+      }
+    }
+    window.toggleResumeParser = toggleResumeParser;
+
+    function parseSkillsFromResume() {
+      if (!dom.resumeRawText || !dom.skills) return;
+      const text = dom.resumeRawText.value.toLowerCase();
+      if (!text.trim()) {
+        showToast("Please paste your resume or LinkedIn text first.");
+        return;
+      }
+
+      const foundSkills = [];
+      ALL_MASTER_SKILLS.forEach(skill => {
+        const regex = new RegExp(`\\b${skill.toLowerCase()}\\b`, 'i');
+        if (regex.test(text)) {
+          foundSkills.push(skill);
+        }
+      });
+
+      if (foundSkills.length === 0) {
+        showToast("No direct matches found. Try entering skills manually or paste more details.");
+        return;
+      }
+
+      let current = dom.skills.value.split(',').map(s => s.trim()).filter(Boolean);
+      foundSkills.forEach(s => {
+        if (!current.some(c => c.toLowerCase() === s.toLowerCase())) {
+          current.push(s);
+        }
+      });
+
+      dom.skills.value = current.join(', ');
+      updateSkillCountBadge();
+      renderSkillPills(activeDomainCategory);
+      fastRecalculate();
+      showToast(`Extracted ${foundSkills.length} verified technical skills!`);
+    }
+    window.parseSkillsFromResume = parseSkillsFromResume;
+
+    function setFresherExperience() {
+      if (dom.exp) {
+        dom.exp.value = "0";
+        fastRecalculate();
+        showToast("Experience set to 0 Yrs (Fresher).");
+      }
+    }
+    window.setFresherExperience = setFresherExperience;
+
+    function loadSampleProfile(type) {
+      if (type === 'analyst') {
+        if (dom.age) dom.age.value = "22";
+        if (dom.exp) dom.exp.value = "0";
+        if (dom.projects) dom.projects.value = "2";
+        if (dom.city) dom.city.value = "BLR";
+        if (dom.skills) dom.skills.value = "Python, SQL, Power BI, Excel, Pandas, NumPy";
+        filterDomainPills('data');
+        showToast("Loaded Fresher Analyst profile.");
+      } else if (type === 'cloud') {
+        if (dom.age) dom.age.value = "25";
+        if (dom.exp) dom.exp.value = "3";
+        if (dom.projects) dom.projects.value = "4";
+        if (dom.city) dom.city.value = "HYD";
+        if (dom.skills) dom.skills.value = "AWS, Docker, Kubernetes, Linux, Terraform, CI/CD";
+        filterDomainPills('devops');
+        showToast("Loaded Cloud Engineer profile.");
+      }
+      updateSkillCountBadge();
+      runEvaluation(false);
+    }
+    window.loadSampleProfile = loadSampleProfile;
+
+    function filterDomainPills(category, evt) {
+      activeDomainCategory = category;
+      const buttons = document.querySelectorAll('.domain-tab-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white');
+        btn.classList.add('bg-slate-900', 'text-slate-400');
+      });
+
+      const targetBtn = evt ? evt.currentTarget : document.querySelector(`.domain-tab-btn[data-domain="${category}"]`);
+      if (targetBtn) {
+        targetBtn.classList.remove('bg-slate-900', 'text-slate-400');
+        targetBtn.classList.add('bg-indigo-600', 'text-white');
+      }
+
+      renderSkillPills(category);
+    }
+    window.filterDomainPills = filterDomainPills;
+
+    function renderSkillPills(category = activeDomainCategory) {
+      activeDomainCategory = category;
+      const container = dom.pillsContainer;
+      if (!container) return;
+      container.innerHTML = '';
+
+      const skillsToRender = category === 'all' ? ALL_MASTER_SKILLS : (SKILL_PILLS_CATALOG[category] || []);
+      const inputVal = dom.skills && dom.skills.value ? dom.skills.value.toLowerCase() : '';
+      const currentSelected = inputVal.split(',').map(s => s.trim()).filter(Boolean);
+
+      const frag = document.createDocumentFragment();
+      skillsToRender.forEach(skill => {
+        const isSelected = currentSelected.includes(skill.toLowerCase());
+        const pill = document.createElement('button');
+        pill.type = 'button';
+        pill.className = `px-2.5 py-1 text-xs rounded-lg font-mono border transition ${
+          isSelected 
+            ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm shadow-indigo-500/30' 
+            : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'
+        }`;
+        pill.innerHTML = `${isSelected ? '<i class="fa-solid fa-check text-[10px] mr-1"></i>' : '+ '} ${skill}`;
+        pill.onclick = () => toggleSkillPill(skill);
+        frag.appendChild(pill);
+      });
+      container.appendChild(frag);
+    }
+
+    function toggleSkillPill(skillName) {
+      const input = dom.skills;
+      if (!input) return;
+      let current = input.value.split(',').map(s => s.trim()).filter(Boolean);
+      const index = current.findIndex(s => s.toLowerCase() === skillName.toLowerCase());
+
+      if (index >= 0) {
+        current.splice(index, 1);
+      } else {
+        current.push(skillName);
+      }
+
+      input.value = current.join(', ');
+      updateSkillCountBadge();
+      renderSkillPills(activeDomainCategory);
+      fastRecalculate();
+    }
+
+    function updateSkillCountBadge() {
+      if (!dom.skills || !dom.skillCountBadge) return;
+      const count = dom.skills.value.split(',').map(s => s.trim()).filter(Boolean).length;
+      dom.skillCountBadge.textContent = `${count} Skills Selected`;
+    }
+
+    function fastRecalculate() {
+      if (lastEvaluatedState) {
+        runEvaluation(false);
+      }
+    }
+
+    /* =====================================================================
+       4. EVALUATION EXECUTION
+       ===================================================================== */
+    function runEvaluation(showNotification = true) {
+      if (!dom.age || !dom.exp || !dom.projects || !dom.city || !dom.skills) {
+        return;
+      }
+
+      const age = parseFloat(dom.age.value) || 22;
+      const exp = parseFloat(dom.exp.value) || 0;
+      const projects = parseFloat(dom.projects.value) || 0;
+      const cityKey = dom.city.value;
+      const cityInfo = CITY_MULTIPLIERS[cityKey] || CITY_MULTIPLIERS["BLR"];
+
+      if (dom.cityMultiplierShort) {
+        dom.cityMultiplierShort.textContent = cityInfo.short;
+      }
+
+      const rawSkills = dom.skills.value;
+      const userSkills = rawSkills.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+
+      if (userSkills.length === 0) {
+        if (showNotification) showToast("Please enter or select at least 1 skill.");
+        return;
+      }
+
+      // Fast Track Matching
+      let bestTrackName = "Full Stack / Web Developer";
+      let maxMatches = -1;
+      let bestTrackData = INDUSTRY_TRACKS[bestTrackName];
+
+      for (const [trackName, data] of Object.entries(INDUSTRY_TRACKS)) {
+        let matches = 0;
+        const kws = data.keywords;
+        for (let i = 0; i < userSkills.length; i++) {
+          const s = userSkills[i];
+          for (let j = 0; j < kws.length; j++) {
+            if (s.includes(kws[j]) || kws[j].includes(s)) {
+              matches++;
+              break;
+            }
+          }
+        }
+        if (matches > maxMatches) {
+          maxMatches = matches;
+          bestTrackName = trackName;
+          bestTrackData = data;
+        }
+      }
+
+      const matchPct = Math.min(Math.round((Math.max(maxMatches, 1) / Math.min(bestTrackData.keywords.length, 5)) * 100), 100);
+
+      // Base Range Calculation
+      let base = 0;
+      if (exp <= 1) {
+        const [minP, maxP] = bestTrackData.fresher_range;
+        base = minP + (maxP - minP) * Math.min(exp, 1.0);
+      } else if (exp <= 5) {
+        const [minP, maxP] = bestTrackData.mid_range;
+        const progress = Math.max(0, (exp - 2) / 3.0);
+        base = minP + (maxP - minP) * Math.min(progress, 1.0);
+      } else {
+        const [minP, maxP] = bestTrackData.senior_range;
+        const progress = Math.max(0, (exp - 6) / 4.0);
+        base = minP + (maxP - minP) * Math.min(progress, 1.0);
+      }
+
+      const projBonus = Math.min(projects, 6) * 30000;
+      const skillBonus = Math.min(userSkills.length, 6) * 20000;
+      const unadjusted = base + projBonus + skillBonus;
+
+      const currentSalary = Math.round((unadjusted * cityInfo.multiplier) / 1000) * 1000;
+      const projectedSalary = Math.round((currentSalary * (1 + (bestTrackData.salary_boost_pct / 100))) / 1000) * 1000;
+      const salaryDiff = projectedSalary - currentSalary;
+
+      let seniority = "Fresher (0 - 1y)";
+      if (exp > 5) seniority = "Senior Lead (6y+)";
+      else if (exp > 1) seniority = "Mid-Level (2 - 5y)";
+
+      const collegeTierVal = dom.collegeTier ? dom.collegeTier.value : "tier3";
+
+      lastEvaluatedState = {
+        age, exp, projects, cityInfo, collegeTierVal,
+        userSkills, trackName: bestTrackName, trackInfo: bestTrackData,
+        matchPct, currentSalary, projectedSalary, salaryDiff, seniority,
+        boostPct: bestTrackData.salary_boost_pct
+      };
+
+      renderDashboard(lastEvaluatedState);
+      if (showNotification) showToast("Market evaluation updated!");
+    }
+
+    /* =====================================================================
+       4.1 FINANCIAL CALCULATOR: NEW TAX REGIME FY 2024-25
+       ===================================================================== */
+    function calculateInHandCash(annualCTC) {
+      const basicPay = annualCTC * 0.40;
+      const annualPF = Math.min(basicPay * 0.12, 216000);
+      const annualPT = 2400; // Standard Professional Tax ₹200/mo
+
+      const taxableIncome = Math.max(0, annualCTC - 75000); // 75k Standard Deduction
+
+      let annualIncomeTax = 0;
+      if (taxableIncome <= 700000) {
+        annualIncomeTax = 0; // Section 87A rebate makes zero tax up to ₹7 LPA
+      } else {
+        if (taxableIncome > 1500000) annualIncomeTax += (taxableIncome - 1500000) * 0.30;
+        if (taxableIncome > 1200000) annualIncomeTax += Math.min(taxableIncome - 1200000, 300000) * 0.20;
+        if (taxableIncome > 1000000) annualIncomeTax += Math.min(taxableIncome - 1000000, 200000) * 0.15;
+        if (taxableIncome > 700000)  annualIncomeTax += Math.min(taxableIncome - 700000, 300000) * 0.10;
+        if (taxableIncome > 300000)  annualIncomeTax += Math.min(taxableIncome - 300000, 400000) * 0.05;
+        annualIncomeTax = annualIncomeTax * 1.04; // 4% Health & Edu Cess
+      }
+
+      const totalDeductions = annualPF + annualPT + annualIncomeTax;
+      const annualNetInHand = Math.max(0, annualCTC - totalDeductions);
+      const monthlyInHand = Math.round(annualNetInHand / 12);
+      const monthlyPF = Math.round(annualPF / 12);
+      const monthlyTax = Math.round((annualIncomeTax + annualPT) / 12);
+
+      return {
+        annualNetInHand,
+        monthlyInHand,
+        monthlyPF,
+        monthlyTax,
+        totalDeductions
+      };
+    }
+
+    /* =====================================================================
+       4.2 FEATURE 5: STACK LONGEVITY & AI RESILIENCE RADAR
+       ===================================================================== */
+    function evaluateStackLongevity(skillsList) {
+      const highImpactKeywords = [
+        "langchain", "llm", "rag", "pytorch", "kubernetes", "distributed systems", 
+        "system design", "pyspark", "snowflake", "cloud security", "ethical hacking", "terraform"
+      ];
+      let matches = 0;
+      skillsList.forEach(s => {
+        if (highImpactKeywords.some(kw => s.toLowerCase().includes(kw))) {
+          matches++;
+        }
+      });
+
+      const baseScore = 75;
+      const bonus = Math.min(matches * 6, 23);
+      const totalScore = Math.min(baseScore + bonus, 98);
+
+      let insight = "Your stack balances established enterprise standards with active demand.";
+      if (totalScore >= 90) {
+        insight = "Excellent 5-year outlook! Your stack integrates modern high-scale tools with resilient core logic.";
+      } else if (totalScore < 80) {
+        insight = "Good baseline, but adding Distributed Architecture, Cloud (AWS/Azure), or GenAI will ensure future resilience.";
+      }
+
+      return { score: totalScore, insight };
+    }
+
+    /* =====================================================================
+       4.3 FEATURE 4: COLLEGE PEDIGREE PARITY LOGIC
+       ===================================================================== */
+    function computeCollegeParity(tier, exp, ctc) {
+      if (tier === 'tier1') {
+        return {
+          targetBadge: "Pedigree Advantage: Tier-1 IIT/NIT Track",
+          phase1: "Leverage campus network and direct high-frequency product interviews.",
+          phase2: "Target Staff/Lead engineering or early leadership paths.",
+          phase3: "Consistently benchmarked in top 5% compensation bands in India."
+        };
+      } else if (tier === 'tier2') {
+        return {
+          targetBadge: "Equalization Target: ~1.2 Years",
+          phase1: "Consolidate 1 year of production experience and 2 high-impact shipped modules.",
+          phase2: "First strategic job switch with 35-50% increment to Tier-1 product medians.",
+          phase3: "Full compensation parity with campus Tier-1 medians achieved by Year 2."
+        };
+      } else {
+        return {
+          targetBadge: "Equalization Target: 1.8 - 2.5 Years",
+          phase1: "Master core algorithms & architecture; avoid purely manual legacy tools.",
+          phase2: "Strategic switch at 18-24 months targeting venture-backed products or Big-4 firms.",
+          phase3: "At Year 3, production capability and domain leadership completely equalize college brand."
+        };
+      }
+    }
+
+    function renderDashboard(state) {
+      if (!state) return;
+
+      if (dom.dispCTC) dom.dispCTC.textContent = `₹${(state.currentSalary / 100000).toFixed(2)} LPA`;
+      if (dom.cityBonusBadge) dom.cityBonusBadge.textContent = state.cityInfo.label;
+      if (dom.dispTrackName) dom.dispTrackName.textContent = state.trackName;
+      if (dom.dispSkillAlignment) dom.dispSkillAlignment.textContent = `${state.matchPct}% Alignment`;
+      if (dom.dispSeniority) dom.dispSeniority.textContent = state.seniority;
+      if (dom.dispExpYearsBadge) dom.dispExpYearsBadge.textContent = `${state.exp}y Experience`;
+
+      // Slabs
+      const [fMin, fMax] = state.trackInfo.fresher_range;
+      const [mMin, mMax] = state.trackInfo.mid_range;
+      const [sMin, sMax] = state.trackInfo.senior_range;
+      if (dom.dispFresherSlab) dom.dispFresherSlab.textContent = `₹${(fMin/100000).toFixed(1)}L - ₹${(fMax/100000).toFixed(1)}L`;
+      if (dom.dispMidSlab) dom.dispMidSlab.textContent = `₹${(mMin/100000).toFixed(1)}L - ₹${(mMax/100000).toFixed(1)}L`;
+      if (dom.dispSeniorSlab) dom.dispSeniorSlab.textContent = `₹${(sMin/100000).toFixed(1)}L - ₹${(sMax/100000).toFixed(1)}L`;
+
+      // Booming Skill
+      if (dom.dispBoomingSkill) dom.dispBoomingSkill.textContent = state.trackInfo.booming_skill;
+      if (dom.dispProjectedCTC) dom.dispProjectedCTC.textContent = `₹${(state.projectedSalary / 100000).toFixed(2)} LPA (+₹${(state.salaryDiff/100000).toFixed(2)}L)`;
+      if (dom.dispSalaryHikeBadge) dom.dispSalaryHikeBadge.textContent = `+${state.boostPct}% Hike`;
+
+      // RENDER FEATURE 1: In-Hand Cash Breakdown
+      const cash = calculateInHandCash(state.currentSalary);
+      if (dom.dispMonthlyInHand) dom.dispMonthlyInHand.textContent = `₹${cash.monthlyInHand.toLocaleString('en-IN')} /mo`;
+      if (dom.dispMonthlyPF) dom.dispMonthlyPF.textContent = `₹${cash.monthlyPF.toLocaleString('en-IN')} /mo`;
+      if (dom.dispMonthlyTax) dom.dispMonthlyTax.textContent = `₹${cash.monthlyTax.toLocaleString('en-IN')} /mo`;
+      if (dom.dispAnnualInHand) dom.dispAnnualInHand.textContent = `₹${cash.annualNetInHand.toLocaleString('en-IN')}`;
+      if (dom.dispAnnualDeductions) dom.dispAnnualDeductions.textContent = `₹${cash.totalDeductions.toLocaleString('en-IN')}`;
+
+      // RENDER FEATURE 5: AI Expiry Radar
+      const longevity = evaluateStackLongevity(state.userSkills);
+      if (dom.dispExpiryScoreBadge) dom.dispExpiryScoreBadge.textContent = `${longevity.score}% Resilient`;
+      if (dom.dispResiliencePct) dom.dispResiliencePct.textContent = `${longevity.score}%`;
+      if (dom.resilienceProgressBar) dom.resilienceProgressBar.style.width = `${longevity.score}%`;
+      if (dom.dispExpiryInsight) dom.dispExpiryInsight.textContent = longevity.insight;
+
+      // RENDER FEATURE 4: College Tier Parity
+      const parity = computeCollegeParity(state.collegeTierVal, state.exp, state.currentSalary);
+      if (dom.dispParityTargetBadge) dom.dispParityTargetBadge.textContent = parity.targetBadge;
+      if (dom.dispParityPhase1) dom.dispParityPhase1.textContent = parity.phase1;
+      if (dom.dispParityPhase2) dom.dispParityPhase2.textContent = parity.phase2;
+      if (dom.dispParityPhase3) dom.dispParityPhase3.textContent = parity.phase3;
+
+      // RENDER FEATURE 6: 90-Day Master Action Plan
+      if (dom.dispPlanWeeks1_4) dom.dispPlanWeeks1_4.textContent = `Master core architecture & fundamentals of ${state.trackInfo.booming_skill}.`;
+      if (dom.dispPlanWeeks5_8) dom.dispPlanWeeks5_8.textContent = `Architect and deploy 1 production-ready project incorporating ${state.trackInfo.booming_skill} with live documentation.`;
+      if (dom.dispPlanWeeks9_12) dom.dispPlanWeeks9_12.textContent = `Simulate live coding rounds and high-level design questions for ${state.trackInfo.hiring_companies.slice(0, 3).join(', ')}.`;
+
+      // RENDER FEATURE 3: Negotiation Counter-Offer Email
+      if (dom.negotiationEmailText) {
+        const skillsFormatted = state.userSkills.map(s => s.trim()).filter(Boolean).map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(', ');
+        const emailContent = [
+          "Subject: Discussion Regarding Offer Letter - [Candidate Name] | " + state.trackName + " Role",
+          "",
+          "Dear Hiring Team,",
+          "",
+          "Thank you very much for extending the offer for the " + state.trackName + " role. I am enthusiastic about the company's vision and the technical roadmap of the engineering team.",
+          "",
+          "I wanted to discuss the compensation package offered. Based on current industry benchmarks for " + state.cityInfo.name + " (" + state.cityInfo.label + ") and my hands-on experience in " + skillsFormatted + ", market compensation for professionals delivering comparable scope is benchmarked around ₹" + (state.currentSalary/100000).toFixed(2) + " LPA.",
+          "",
+          "Given my capability to immediately contribute to your product releases and architecture, I would be grateful if we could revise the annual fixed compensation closer to this benchmark.",
+          "",
+          "Looking forward to speaking with you and finalizing our partnership.",
+          "",
+          "Warm regards,",
+          "[Your Full Name]",
+          "[Phone Number] | [LinkedIn Profile]"
+        ].join('\n');
+        dom.negotiationEmailText.value = emailContent;
+      }
+
+      // Render Bottom Text Report
+      if (dom.reportOutputBox) {
+        const currCompsStr = state.trackInfo.current_companies.map(c => `   • ${c}`).join('\n');
+        const hiringCompsStr = state.trackInfo.hiring_companies.map(c => `   ★ ${c}`).join('\n');
+        const skillsFormatted = state.userSkills.map(s => s.trim()).filter(Boolean).map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(', ');
+
+        const reportText = [
+          "======================================================================",
+          "        CAREERSCOPE — COMPREHENSIVE MARKET EVALUATION REPORT          ",
+          "======================================================================",
+          "",
+          `👤 Candidate Profile: ${state.exp} Years Experience (${state.seniority}) | ${state.projects} Projects`,
+          `🛠️ Verified Skill Set: ${skillsFormatted}`,
+          `🎯 Aligned Career Track: ${state.trackName} (${state.matchPct}% Alignment)`,
+          `📍 Target Tech Hub: ${state.cityInfo.name} (${state.cityInfo.label})`,
+          `🎓 Campus Pedigree: ${state.collegeTierVal.toUpperCase()}`,
+          "",
+          `💵 ESTIMATED ANNUAL COMPENSATION (CTC): ₹${state.currentSalary.toLocaleString('en-IN')} / Year (₹${(state.currentSalary/100000).toFixed(2)} LPA)`,
+          `🏦 ESTIMATED MONTHLY IN-HAND (TAKE-HOME): ₹${cash.monthlyInHand.toLocaleString('en-IN')} / Month (Post Tax & PF)`,
+          "----------------------------------------------------------------------",
+          "📊 OFFICIAL INDUSTRY COMPENSATION SLABS FOR THIS TRACK:",
+          `   • Fresher Base Slabs (0 - 1 Year)   : ₹${fMin.toLocaleString('en-IN')} - ₹${fMax.toLocaleString('en-IN')} / Year`,
+          `   • Mid-Level Slabs (2 - 5 Years)     : ₹${mMin.toLocaleString('en-IN')} - ₹${mMax.toLocaleString('en-IN')} / Year`,
+          `   • Senior Professional Slabs (6+ Yrs): ₹${sMin.toLocaleString('en-IN')} - ₹${sMax.toLocaleString('en-IN')} / Year`,
+          "",
+          "----------------------------------------------------------------------",
+          "🏢 1. CORPORATE EMPLOYERS ACTIVELY HIRING FOR YOUR CURRENT PROFILE:",
+          currCompsStr,
+          "",
+          "----------------------------------------------------------------------",
+          "🔥 2. HIGH-DEMAND BOOMING SKILLS & ACTIVE ENTERPRISE VACANCIES:",
+          `👉 High-Impact Competency: ${state.trackInfo.booming_skill}`,
+          "📢 Active Openings & High-Tier Recruitment Drives Currently Open At:",
+          hiringCompsStr,
+          "",
+          "----------------------------------------------------------------------",
+          "🚀 3. ESTIMATED COMPENSATION UPON ACQUIRING HIGH-DEMAND SKILLS:",
+          `📈 Projected Compensation Post-Upskilling: ₹${state.projectedSalary.toLocaleString('en-IN')} / Year (₹${(state.projectedSalary/100000).toFixed(2)} LPA)`,
+          `💰 Direct Compensation Increase: +₹${state.salaryDiff.toLocaleString('en-IN')} / Year (+${state.boostPct}% Projected Growth)`,
+          "",
+          "======================================================================"
+        ].join('\n');
+
+        dom.reportOutputBox.value = reportText;
+      }
+
+      // Fast badge render
+      if (dom.hiringCompaniesList) {
+        const frag = document.createDocumentFragment();
+        state.trackInfo.hiring_companies.forEach(comp => {
+          const badge = document.createElement('button');
+          badge.type = 'button';
+          badge.className = 'px-2.5 py-1 text-xs rounded-lg bg-amber-950/40 border border-amber-500/30 text-amber-200 hover:border-amber-400 transition flex items-center space-x-1';
+          badge.innerHTML = `<i class="fa-solid fa-star text-[10px] text-amber-400 mr-1"></i><span>${comp}</span>`;
+          badge.onclick = () => selectCompanyInDossier(comp);
+          frag.appendChild(badge);
+        });
+        dom.hiringCompaniesList.innerHTML = '';
+        dom.hiringCompaniesList.appendChild(frag);
+      }
+
+      // Dropdown Populate
+      const select = dom.companySelectDropdown;
+      if (select) {
+        const currentVal = select.value;
+        select.innerHTML = '<option value="">Select Employer to View Dossier</option>';
+        const allCompanies = Array.from(new Set([...state.trackInfo.current_companies, ...state.trackInfo.hiring_companies]));
+        
+        const optFrag = document.createDocumentFragment();
+        allCompanies.forEach(comp => {
+          const opt = document.createElement('option');
+          opt.value = comp;
+          opt.textContent = comp;
+          optFrag.appendChild(opt);
+        });
+        select.appendChild(optFrag);
+
+        if (allCompanies.includes(currentVal)) {
+          select.value = currentVal;
+        } else if (allCompanies.length > 0) {
+          select.value = allCompanies[0];
+        }
+        onCompanyDropdownChanged();
+      }
+    }
+
+    function selectCompanyInDossier(companyName) {
+      if (!dom.companySelectDropdown || !dom.dossierCard) return;
+      dom.companySelectDropdown.value = companyName;
+      onCompanyDropdownChanged();
+      dom.dossierCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function onCompanyDropdownChanged() {
+      if (!dom.companySelectDropdown) return;
+      const selected = dom.companySelectDropdown.value;
+      if (!selected || !COMPANY_DATABASE[selected]) return;
+
+      const info = COMPANY_DATABASE[selected];
+      if (dom.dossierName) dom.dossierName.innerHTML = `<i class="fa-solid fa-building text-indigo-400 mr-2"></i>${selected}`;
+      if (dom.dossierSector) dom.dossierSector.textContent = info.sector;
+      if (dom.dossierRating) dom.dossierRating.innerHTML = `<i class="fa-solid fa-star text-[10px] mr-1"></i>${info.rating}`;
+      if (dom.dossierHQ) dom.dossierHQ.innerHTML = `<i class="fa-solid fa-city text-[10px] mr-1"></i>${info.hq}`;
+      if (dom.dossierLocations) dom.dossierLocations.textContent = info.locations;
+      if (dom.dossierRounds) dom.dossierRounds.textContent = info.rounds;
+      if (dom.dossierCulture) dom.dossierCulture.textContent = info.culture;
+
+      // FEATURE 7: Render top 5 interview questions
+      if (dom.dossierQuestionsList) {
+        dom.dossierQuestionsList.innerHTML = '';
+        const questions = info.questions || [
+          "Explain your core architecture and project challenges.",
+          "Describe how you handle query or API performance bottlenecks.",
+          "Walk through your debugging workflow when production services fail.",
+          "How do you design for high availability and fault tolerance?",
+          "Explain how you collaborate across engineering and product teams."
+        ];
+        const qFrag = document.createDocumentFragment();
+        questions.forEach((q, idx) => {
+          const item = document.createElement('div');
+          item.className = 'p-2 rounded-lg bg-slate-950/70 border border-slate-800/80 text-slate-300 text-[11px] font-mono flex items-start space-x-2';
+          item.innerHTML = `<span class="text-amber-400 font-bold">Q${idx + 1}:</span><span>${q}</span>`;
+          qFrag.appendChild(item);
+        });
+        dom.dossierQuestionsList.appendChild(qFrag);
+      }
+
+      // Update Live Job Search Links
+      const roleQuery = lastEvaluatedState ? encodeURIComponent(`${selected} ${lastEvaluatedState.trackName} India`) : encodeURIComponent(`${selected} jobs`);
+      if (dom.linkLinkedInJobs) dom.linkLinkedInJobs.href = `https://www.linkedin.com/jobs/search/?keywords=${roleQuery}`;
+      if (dom.linkGoogleJobs) dom.linkGoogleJobs.href = `https://www.google.com/search?q=${roleQuery}+careers`;
+    }
+
+    function handleCityFilterChange() {
+      const cityKey = dom.city ? dom.city.value : 'BLR';
+      const cityInfo = CITY_MULTIPLIERS[cityKey] || CITY_MULTIPLIERS['BLR'];
+      if (dom.cityMultiplierShort) dom.cityMultiplierShort.textContent = cityInfo.short;
+      fastRecalculate();
+    }
+    window.handleCityFilterChange = handleCityFilterChange;
+
+    function copyNegotiationEmail() {
+      if (!dom.negotiationEmailText || !dom.negotiationEmailText.value.trim()) {
+        showToast("Please calculate an evaluation first to generate the email.");
+        return;
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(dom.negotiationEmailText.value);
+        } else {
+          dom.negotiationEmailText.select();
+          document.execCommand('copy');
+        }
+        if (dom.copyEmailBtnText) dom.copyEmailBtnText.textContent = "Copied!";
+        showToast("Formal negotiation email copied to clipboard.");
+        setTimeout(() => {
+          if (dom.copyEmailBtnText) dom.copyEmailBtnText.textContent = "Copy Email";
+        }, 2000);
+      } catch (err) {
+        showToast("Failed to copy negotiation email.");
+      }
+    }
+    window.copyNegotiationEmail = copyNegotiationEmail;
+
+    function resetEvaluationForm() {
+      const form = document.getElementById('evaluationForm');
+      if (form) form.reset();
+      if (dom.age) dom.age.value = "";
+      if (dom.exp) dom.exp.value = "";
+      if (dom.projects) dom.projects.value = "";
+      if (dom.skills) dom.skills.value = "";
+      if (dom.resumeRawText) dom.resumeRawText.value = "";
+      lastEvaluatedState = null;
+      updateSkillCountBadge();
+      renderSkillPills('all');
+      resetDashboardToEmpty();
+      showToast("Form cleared.");
+    }
+    window.resetEvaluationForm = resetEvaluationForm;
+    window.onCompanyDropdownChanged = onCompanyDropdownChanged;
+    window.runEvaluation = runEvaluation;
+
+    function resetDashboardToEmpty() {
+      if (dom.dispCTC) dom.dispCTC.textContent = "₹-- LPA";
+      if (dom.cityBonusBadge) dom.cityBonusBadge.textContent = "Awaiting Evaluation";
+      if (dom.dispTrackName) dom.dispTrackName.textContent = "Enter details & click calculate";
+      if (dom.dispSkillAlignment) dom.dispSkillAlignment.textContent = "0% Alignment";
+      if (dom.dispSeniority) dom.dispSeniority.textContent = "--";
+      if (dom.dispExpYearsBadge) dom.dispExpYearsBadge.textContent = "--";
+
+      if (dom.dispFresherSlab) dom.dispFresherSlab.textContent = "₹--";
+      if (dom.dispMidSlab) dom.dispMidSlab.textContent = "₹--";
+      if (dom.dispSeniorSlab) dom.dispSeniorSlab.textContent = "₹--";
+
+      if (dom.dispBoomingSkill) dom.dispBoomingSkill.textContent = "Select skills and run evaluation to view recommendations";
+      if (dom.dispProjectedCTC) dom.dispProjectedCTC.textContent = "₹-- LPA";
+      if (dom.dispSalaryHikeBadge) dom.dispSalaryHikeBadge.textContent = "--";
+
+      // Reset Feature 1
+      if (dom.dispMonthlyInHand) dom.dispMonthlyInHand.textContent = "₹-- /mo";
+      if (dom.dispMonthlyPF) dom.dispMonthlyPF.textContent = "₹-- /mo";
+      if (dom.dispMonthlyTax) dom.dispMonthlyTax.textContent = "₹-- /mo";
+      if (dom.dispAnnualInHand) dom.dispAnnualInHand.textContent = "₹--";
+      if (dom.dispAnnualDeductions) dom.dispAnnualDeductions.textContent = "₹--";
+
+      // Reset Feature 3
+      if (dom.negotiationEmailText) {
+        dom.negotiationEmailText.value = "";
+        dom.negotiationEmailText.placeholder = "Calculate your market worth to generate your customized salary negotiation email.";
+      }
+
+      // Reset Feature 4
+      if (dom.dispParityTargetBadge) dom.dispParityTargetBadge.textContent = "Awaiting Evaluation";
+      if (dom.dispParityPhase1) dom.dispParityPhase1.textContent = "Enter profile to generate customized equalization milestones.";
+      if (dom.dispParityPhase2) dom.dispParityPhase2.textContent = "Phase 2 action steps will appear here.";
+      if (dom.dispParityPhase3) dom.dispParityPhase3.textContent = "Phase 3 salary parity steps will appear here.";
+
+      // Reset Feature 5
+      if (dom.dispExpiryScoreBadge) dom.dispExpiryScoreBadge.textContent = "--";
+      if (dom.dispResiliencePct) dom.dispResiliencePct.textContent = "--";
+      if (dom.resilienceProgressBar) dom.resilienceProgressBar.style.width = "0%";
+      if (dom.dispExpiryInsight) dom.dispExpiryInsight.textContent = "Select skills to evaluate 5-year stack longevity.";
+
+      // Reset Feature 6
+      if (dom.dispPlanWeeks1_4) dom.dispPlanWeeks1_4.textContent = "Foundation sprints will appear after career evaluation.";
+      if (dom.dispPlanWeeks5_8) dom.dispPlanWeeks5_8.textContent = "Production capstone guidance will appear here.";
+      if (dom.dispPlanWeeks9_12) dom.dispPlanWeeks9_12.textContent = "Mock placement loops and live coding targets will appear here.";
+
+      if (dom.hiringCompaniesList) {
+        dom.hiringCompaniesList.innerHTML = '<span class="text-xs text-slate-500 italic">Recruiting employers will appear after evaluation.</span>';
+      }
+
+      if (dom.companySelectDropdown) {
+        dom.companySelectDropdown.innerHTML = '<option value="">Select Employer to View Dossier</option>';
+      }
+
+      if (dom.dossierName) dom.dossierName.innerHTML = `<i class="fa-solid fa-building text-indigo-400 mr-2"></i>Select a Company`;
+      if (dom.dossierSector) dom.dossierSector.textContent = "Awaiting candidate input";
+      if (dom.dossierRating) dom.dossierRating.innerHTML = `<i class="fa-solid fa-star text-[10px] mr-1"></i>--`;
+      if (dom.dossierHQ) dom.dossierHQ.innerHTML = `<i class="fa-solid fa-city text-[10px] mr-1"></i>HQ`;
+      if (dom.dossierLocations) dom.dossierLocations.textContent = "Will populate based on your career track.";
+      if (dom.dossierRounds) dom.dossierRounds.textContent = "Interview rounds will be displayed here.";
+      if (dom.dossierCulture) dom.dossierCulture.textContent = "Workplace culture and benefits summary.";
+
+      if (dom.dossierQuestionsList) {
+        dom.dossierQuestionsList.innerHTML = '<div class="p-2 rounded-lg bg-slate-950/70 border border-slate-800/80 text-slate-400 text-[11px] font-mono">Select a company to view the actual questions asked in technical rounds.</div>';
+      }
+
+      if (dom.reportOutputBox) {
+        dom.reportOutputBox.value = "";
+        dom.reportOutputBox.placeholder = "Enter candidate parameters above and click 'Calculate Realistic Market Worth' to generate the official evaluation report.";
+      }
+    }
+
+    function copyReportText() {
+      if (!dom.reportOutputBox || !dom.reportOutputBox.value.trim()) {
+        showToast("Please calculate an evaluation first to generate the report.");
+        return;
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(dom.reportOutputBox.value);
+        } else {
+          dom.reportOutputBox.select();
+          document.execCommand('copy');
+        }
+        if (dom.copyReportBtnText) dom.copyReportBtnText.textContent = "Copied!";
+        showToast("Report copied to clipboard.");
+        setTimeout(() => {
+          if (dom.copyReportBtnText) dom.copyReportBtnText.textContent = "Copy Report";
+        }, 2000);
+      } catch (err) {
+        showToast("Failed to copy report text.");
+      }
+    }
+    window.copyReportText = copyReportText;
+
+    function handleEvaluation(e) {
+      if (e && typeof e.preventDefault === 'function') {
+        e.preventDefault();
+      }
+      runEvaluation(true);
+      return false;
+    }
+    window.handleEvaluation = handleEvaluation;
+
+    let toastTimer = null;
+    function showToast(msg) {
+      if (!dom.toast || !dom.toastMsg) return;
+      dom.toastMsg.textContent = msg;
+      dom.toast.classList.remove('translate-y-20', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        if (dom.toast) dom.toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2000);
+    }
+
+    // Initial load - Starts completely empty and ready for user input
+    window.addEventListener('DOMContentLoaded', () => {
+      initDomCache();
+      if (dom.skills) {
+        dom.skills.addEventListener('input', () => {
+          updateSkillCountBadge();
+          if (lastEvaluatedState) {
+            fastRecalculate();
+          }
+        });
+      }
+
+      // Keep inputs clear initially
+      if (dom.age) dom.age.value = "";
+      if (dom.exp) dom.exp.value = "";
+      if (dom.projects) dom.projects.value = "";
+      if (dom.skills) dom.skills.value = "";
+      
+      renderSkillPills('all');
+      updateSkillCountBadge();
+      resetDashboardToEmpty();
+    });
+  </script>
+</body>
+</html>
